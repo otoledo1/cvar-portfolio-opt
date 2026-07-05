@@ -14,23 +14,24 @@ auto-creating them if needed.
 ├── LICENSE
 ├── .gitignore
 ├── requirements.txt
-├── pre_data_collection_checklist_draft.md   <- full design-decision log
+├── Pre-Data-Collection Decisions.md   <- full design-decision log
 │
-├── cvar_smoke_test.py            <- validates the CVaR optimizer core
-├── pull_equity_data.py           <- pulls the 12-stock universe
-├── pull_fred_data.py             <- pulls FRED regime-signal series
-├── pull_market_benchmark.py      <- pulls SPY (regime signal only)
-├── pull_market_caps.py           <- pulls shares outstanding (cap-weight input)
-├── check_data_alignment.py       <- coverage/gap diagnostic across all data
-├── splice_dollar_index.py        <- splices DTWEXB + DTWEXBGS into one series
-├── build_regime_labels.py        <- the regime classifier (kappa function)
-├── portfolio_construction.py     <- baseline strategy weight functions (library)
-├── run_baselines.py              <- walk-forward backtest, six baselines
-├── cvar_model.py                 <- CVaR optimizer core (library)
-├── run_cvar_historical.py        <- Historical CVaR backtest (rho=0)
-├── run_cvar_regime_aware.py      <- Regime-Aware CVaR backtest (rho>0)
-├── diagnose_dollar_strength.py   <- weight/scenario-count diagnostic
-├── run_sensitivity_analysis.py   <- alpha/lookback/txn-cost/turnover sweep
+├── code/
+│   ├── cvar_smoke_test.py            <- validates the CVaR optimizer core
+|   ├── pull_equity_data.py           <- pulls the 12-stock universe
+|   ├── pull_fred_data.py             <- pulls FRED regime-signal series
+|   ├── pull_market_benchmark.py      <- pulls SPY (regime signal only)
+|   ├── pull_market_caps.py           <- pulls shares outstanding (cap-weight input)
+|   ├── check_data_alignment.py       <- coverage/gap diagnostic across all data
+|   ├── splice_dollar_index.py        <- splices DTWEXB + DTWEXBGS into one series
+|   ├── build_regime_labels.py        <- the regime classifier (kappa function)
+|   ├── portfolio_construction.py     <- baseline strategy weight functions (library)
+|   ├── run_baselines.py              <- walk-forward backtest, six baselines
+|   ├── cvar_model.py                 <- CVaR optimizer core (library)
+|   ├── run_cvar_historical.py        <- Historical CVaR backtest (rho=0)
+|   ├── run_cvar_regime_aware.py      <- Regime-Aware CVaR backtest (rho>0)
+|   ├── diagnose_dollar_strength.py   <- weight/scenario-count diagnostic
+|   ├── run_sensitivity_analysis.py   <- alpha/lookback/txn-cost/turnover sweep
 │
 ├── data/                          <- pulled data (gitignored, re-pullable)
 │   ├── equity_prices_monthly.csv
@@ -41,16 +42,16 @@ auto-creating them if needed.
 │   ├── shares_outstanding.csv
 │   └── regime_labels.csv
 │
-└── results/                       <- backtest outputs (tracked in git —
-                                       these are the numbers the paper cites)
-    ├── baseline_returns.csv
-    ├── baseline_metrics.csv
-    ├── historical_cvar_returns.csv
-    ├── historical_cvar_weights.csv
-    ├── historical_cvar_turnover.csv
-    ├── regime_cvar_returns_rho0p5.csv / rho1p0.csv / rho2p0.csv / rho3p0.csv
-    ├── regime_cvar_weights_rho0p5.csv / rho1p0.csv / rho2p0.csv / rho3p0.csv
-    └── sensitivity_analysis_summary.csv
+├── results/                       <- backtest outputs (tracked in git these are the numbers the paper cites)
+|   ├── baseline_returns.csv
+|   ├── baseline_metrics.csv
+|   ├── historical_cvar_returns.csv
+|   ├── historical_cvar_weights.csv
+|   ├── historical_cvar_turnover.csv
+|   ├── regime_cvar_returns_rho0p5.csv / rho1p0.csv / rho2p0.csv / rho3p0.csv
+|   ├── regime_cvar_weights_rho0p5.csv / rho1p0.csv / rho2p0.csv / rho3p0.csv
+|   └── sensitivity_analysis_summary.csv
+
 ```
  
 ## Pipeline (run in this order)
