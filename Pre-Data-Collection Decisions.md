@@ -1,5 +1,11 @@
 # Pre-Data-Collection Decisions: Regime-Conditioned CVaR Portfolio Optimization (Equity-Only)
 
+## Note: 
+
+This document is the original outline of the project. Numbers, methods, and ideas may be outdated or wrong. This is meant for reference only.
+
+---
+
 Draft answers to lock in before pulling any data. Everything here is a starting proposal — the goal is to have *something* fixed in writing before you look at results, not to get every number perfect on the first pass.
 
 ---
