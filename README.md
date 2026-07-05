@@ -6,9 +6,7 @@
  
 Everything runs flat, in one directory — no nested folders. Every script
 looks for a `data/` and/or `results/` subfolder sitting next to itself,
-auto-creating them if needed. This was a deliberate simplification partway
-through the project (see checklist history) rather than the originally
-scaffolded `/scripts` + `/backtest` + `/optimization` split.
+auto-creating them if needed. 
  
 ```
 .
