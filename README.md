@@ -15,22 +15,22 @@ auto-creating them if needed.
 ├── Pre-Data-Collection Decisions.md   <- full design-decision log
 │
 ├── code/
-│   ├── cvar_smoke_test.py            <- validates the CVaR optimizer core
-│   ├── pull_equity_data.py           <- pulls the 12-stock universe
-│   ├── pull_fred_data.py             <- pulls FRED regime-signal series
-│   ├── pull_market_benchmark.py      <- pulls SPY (regime signal only)
-│   ├── pull_market_caps.py           <- pulls shares outstanding (cap-weight input)
-│   ├── check_data_alignment.py       <- coverage/gap diagnostic across all data
-│   ├── splice_dollar_index.py        <- splices DTWEXB + DTWEXBGS into one series
-│   ├── build_regime_labels.py        <- the regime classifier (kappa function)
-│   ├── portfolio_construction.py     <- baseline strategy weight functions (library)
-│   ├── run_baselines.py              <- walk-forward backtest, six baselines
-│   ├── cvar_model.py                 <- [MODIFIED] CVaR optimizer core (library) — now also returns the VaR/eta threshold
-│   ├── run_cvar_historical.py        <- [MODIFIED] Historical CVaR backtest (rho=0) — now saves VaR + regime_at_decision
-│   ├── run_cvar_regime_aware.py      <- [MODIFIED] Regime-Aware CVaR backtest (rho>0) — now saves VaR, turnover, regime_at_decision
-│   ├── diagnose_dollar_strength.py   <- weight/scenario-count diagnostic
-│   ├── run_sensitivity_analysis.py   <- alpha/lookback/txn-cost/turnover sweep
-│   ├── section_a_analysis.py         <- [NEW] closes the Section A checklist gaps (VaR summary, txn-cost drag, regime-stratified baselines, unclassified-vs-tranquil test, sector-cap check)
+│   ├── cvar_smoke_test.py              <- validates the CVaR optimizer core
+│   ├── pull_equity_data.py             <- pulls the 12-stock universe
+│   ├── pull_fred_data.py               <- pulls FRED regime-signal series
+│   ├── pull_market_benchmark.py        <- pulls SPY (regime signal only)
+│   ├── pull_market_caps.py             <- pulls shares outstanding (cap-weight input)
+│   ├── check_data_alignment.py         <- coverage/gap diagnostic across all data
+│   ├── splice_dollar_index.py          <- splices DTWEXB + DTWEXBGS into one series
+│   ├── build_regime_labels.py          <- the regime classifier (kappa function)
+│   ├── portfolio_construction.py       <- baseline strategy weight functions (library)
+│   ├── run_baselines.py                <- walk-forward backtest, six baselines
+│   ├── cvar_model.py                   <- [MODIFIED] CVaR optimizer core (library) — now also returns the VaR/eta threshold
+│   ├── run_cvar_historical.py          <- [MODIFIED] Historical CVaR backtest (rho=0) — now saves VaR + regime_at_decision
+│   ├── run_cvar_regime_aware.py        <- [MODIFIED] Regime-Aware CVaR backtest (rho>0) — now saves VaR, turnover, regime_at_decision
+│   ├── diagnose_dollar_strength.py     <- weight/scenario-count diagnostic
+│   ├── run_sensitivity_analysis.py     <- alpha/lookback/txn-cost/turnover sweep
+│   ├── additional-metrics-analysis.py  <- [NEW] closes the additional metrics analysis checklist gaps (VaR summary, txn-cost drag, regime-stratified baselines, unclassified-vs-tranquil test, sector-cap check)
 │
 ├── data/                          <- pulled data (re-pullable)
 │   ├── equity_prices_monthly.csv
@@ -55,7 +55,7 @@ auto-creating them if needed.
 │   ├── regime_cvar_var_rho0p5.csv / rho1p0.csv / rho2p0.csv / rho3p0.csv            <- [NEW]
 │   ├── regime_cvar_regime_at_decision_rho0p5.csv / rho1p0.csv / rho2p0.csv / rho3p0.csv <- [NEW]
 │   ├── sensitivity_analysis_summary.csv
-│   └── section_a/                     <- [NEW] outputs of section_a_analysis.py
+│   └── additional-metrics-analysis/                     <- [NEW] outputs of additional-metrics-analysis.py
 │       ├── var_summary.csv
 │       ├── txn_cost_drag.csv
 │       ├── regime_stratified_all_strategies_long.csv
@@ -98,11 +98,11 @@ python run_cvar_regime_aware.py 3
 python diagnose_dollar_strength.py 3.0
 python run_sensitivity_analysis.py
 
-# 7. Section A analysis (VaR summary, txn-cost drag, regime-stratified
+# 7. Additional metrics analysis (VaR summary, txn-cost drag, regime-stratified
 #    baselines, unclassified-vs-tranquil test, sector-cap check) — run
 #    after step 5 has produced the *_var.csv / *_regime_at_decision*.csv
 #    files it depends on
-python section_a_analysis.py
+python additional-metrics-analysis.py
 ```
 
 ## Universe (12 stocks, 8 sectors)
@@ -130,7 +130,7 @@ monotonically as ρ increases, an effect concentrated in and driven by the
 dollar-strength regime specifically (see `diagnose_dollar_strength.py`
 output and the checklist for the full mechanism discussion).
 
-## Section A findings (VaR, transaction costs, regime-stratified
+## Additional Metrics Analysis findings (VaR, transaction costs, regime-stratified
 baselines, unclassified bucket, sector cap, factor exposure)
 
 - **VaR (η)**: mean ≈ 0.042–0.045 across ρ=0..3; declines slightly as ρ
@@ -138,7 +138,7 @@ baselines, unclassified bucket, sector cap, factor exposure)
 - **Transaction-cost drag**: under 5bps one-way, drag is under 0.2% of
   annual return for every strategy — doesn't affect any ranking.
 - **Regime-stratified performance**: now computed for all 8 strategies,
-  not just the two CVaR models — see `results/section_a/regime_stratified_all_strategies_pivot.csv`.
+  not just the two CVaR models — see `results/additional-metrics-analysis/regime_stratified_all_strategies_pivot.csv`.
 - **Unclassified vs. tranquil**: mean returns differ (0.61%/mo vs.
   1.27%/mo) but not statistically at n=52 (Welch p=0.207); variances are
   statistically identical (Levene p=0.957). Decision: keep unclassified
@@ -151,7 +151,7 @@ baselines, unclassified bucket, sector cap, factor exposure)
   documented as a one-line limitation instead of pulling French library
   data.
 
-Full write-up: `section_a_findings.md` (not part of this repo tree by
+Full write-up: `additional-metrics-analysis_findings.md` (not part of this repo tree by
 default — add it under a `writeups/` or `docs/` folder if you want it
 version-controlled alongside the code).
 
@@ -175,5 +175,5 @@ version-controlled alongside the code).
   returns for every strategy (not embedded in the optimization objective
   the way Formula 10 in the outline specifies), so the CVaR model and the
   six baselines are directly comparable on the same accounting basis.
-- **Factor exposure (Fama-French)** was not decomposed — see Section A
-  findings above for the rationale.
+- **Factor exposure (Fama-French)** was not decomposed — see
+  additional-metrics-analysis_findings.md findings above for the rationale.
