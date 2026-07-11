@@ -89,17 +89,16 @@ python pull_fred_data.py YOUR_FRED_API_KEY
 python pull_market_benchmark.py
 python pull_market_caps.py
 python splice_dollar_index.py
-python check_data_alignment.py      # verify no unexpected gaps
+python check_data_alignment.py # verify no unexpected gaps
 
 # 3. Regime classification
-python build_regime_labels.py       # prints regime distribution + crisis spot-check
+python build_regime_labels.py # prints regime distribution + crisis spot-check
 
 # 4. Baselines
-python run_baselines.py             # equal weight, cap-weighted, min-var,
-                                    # mean-var, risk parity, momentum
+python run_baselines.py # equal weight, cap-weighted, min-var, mean-var, risk parity, momentum
 
 # 5. CVaR models
-python run_cvar_historical.py       # rho=0, the primary result
+python run_cvar_historical.py # rho=0, the primary result
 python run_cvar_regime_aware.py 0.5 # repeat for 0.5, 1, 2, 3 (the sweep)
 python run_cvar_regime_aware.py 1
 python run_cvar_regime_aware.py 2
