@@ -96,7 +96,7 @@ python build_regime_labels.py       # prints regime distribution + crisis spot-c
 
 # 4. Baselines
 python run_baselines.py             # equal weight, cap-weighted, min-var,
-                                     # mean-var, risk parity, momentum
+                                    # mean-var, risk parity, momentum
 
 # 5. CVaR models
 python run_cvar_historical.py       # rho=0, the primary result
